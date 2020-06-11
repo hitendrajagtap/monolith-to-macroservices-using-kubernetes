@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using DroneDelivery.Common.Models;
+﻿using DroneDelivery.Common.Models;
+using System.Threading.Tasks;
 
-namespace DroneDelivery.Common.Services
+namespace DroneDelivery_after.Services
 {
     public interface IPackageProcessor
     {

@@ -3,25 +3,20 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using DroneDelivery.Common.Models;
 
-namespace DroneDelivery.Common.Services
+namespace DroneDelivery_after.Services
 {
     public class RequestProcessor : IRequestProcessor
     {
         private readonly ILogger<RequestProcessor> logger;
         private readonly IPackageProcessor packageProcessor;
         private readonly IDroneScheduler droneScheduler;
-        private readonly IDeliveryRepository deliveryRepository;
 
-        public RequestProcessor(
-            ILogger<RequestProcessor> logger,
-            IPackageProcessor packageProcessor,
-            IDroneScheduler droneScheduler,
-            IDeliveryRepository deliveryRepository)
+        public RequestProcessor(ILogger<RequestProcessor> logger,
+            IPackageProcessor packageProcessor, IDroneScheduler droneScheduler)
         {
             this.logger = logger;
             this.packageProcessor = packageProcessor;
             this.droneScheduler = droneScheduler;
-            this.deliveryRepository = deliveryRepository;
         }
 
         public async Task<bool> ProcessDeliveryRequestAsync(Delivery deliveryRequest)
@@ -40,7 +35,7 @@ namespace DroneDelivery.Common.Services
                     {
                         logger.LogInformation("Assigned drone {droneId} for delivery {deliveryId}", droneId, deliveryRequest.DeliveryId);
 
-                        var success = await deliveryRepository.ScheduleDeliveryAsync(deliveryRequest, droneId).ConfigureAwait(false);
+                        var success = await droneScheduler.ScheduleDeliveryAsync(deliveryRequest, droneId).ConfigureAwait(false);
                         if (success)
                         {
                             logger.LogInformation("Completed delivery {deliveryId}", deliveryRequest.DeliveryId);

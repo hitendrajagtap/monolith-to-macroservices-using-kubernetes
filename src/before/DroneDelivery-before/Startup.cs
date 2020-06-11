@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using DroneDelivery.Common.Services;
-using DroneDelivery_before.Services;
 
 namespace DroneDelivery_before
 {

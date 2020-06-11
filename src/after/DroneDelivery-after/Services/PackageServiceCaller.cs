@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using DroneDelivery.Common.Models;
-using DroneDelivery.Common.Services;
 
 namespace DroneDelivery_after.Services
 {
@@ -18,7 +18,7 @@ namespace DroneDelivery_after.Services
 
         public async Task<PackageGen> CreatePackageAsync(PackageInfo packageInfo)
         {
-            var result = await httpClient.PutAsJsonAsync($"{packageInfo.PackageId}?code={FunctionCode}", packageInfo);
+            var result = await httpClient.PostAsJsonAsync(httpClient.BaseAddress, packageInfo);
             result.EnsureSuccessStatusCode();
 
             return new PackageGen { Id = packageInfo.PackageId };

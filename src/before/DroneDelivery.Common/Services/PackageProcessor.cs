@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
 using DroneDelivery.Common.Models;
-using DroneDelivery.Common.Services;
 
-namespace DroneDelivery_before.Services
+namespace DroneDelivery.Common.Services
 {
     public class PackageProcessor : IPackageProcessor
     {

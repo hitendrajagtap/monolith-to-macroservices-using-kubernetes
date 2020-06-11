@@ -1,4 +1,4 @@
-﻿namespace DroneDelivery.Common.Services
+﻿namespace DroneDelivery.Common
 {
     public class Utility
     {

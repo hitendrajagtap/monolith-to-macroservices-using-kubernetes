@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using DroneDelivery.Common.Models;
 
-namespace DroneDelivery.Common.Services
+namespace DroneDelivery_after.Services
 {
     public interface IRequestProcessor
     {

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using DroneDelivery.Common.Services;
 using DroneDelivery_after.Services;
 
 namespace DroneDelivery_after
@@ -23,9 +22,8 @@ namespace DroneDelivery_after
         {
             services
                 .AddHttpClient()
-                .AddTransient<IDeliveryRepository, DeliveryRepository>()
-                .AddTransient<IDroneScheduler, DroneScheduler>()
                 .AddTransient<IPackageProcessor, PackageServiceCaller>()
+                .AddTransient<IDroneScheduler, DroneServiceCaller>()
                 .AddTransient<IRequestProcessor, RequestProcessor>();
 
             services
@@ -33,8 +31,11 @@ namespace DroneDelivery_after
                 {
                     c.BaseAddress = new System.Uri(Configuration["PackageServiceUri"]);
                 });
-
-            PackageServiceCaller.FunctionCode = Configuration["PackageServiceFunctionCode"];
+            services
+                .AddHttpClient<IDroneScheduler, DroneServiceCaller>(c =>
+                {
+                    c.BaseAddress = new System.Uri(Configuration["DroneServiceUri"]);
+                });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -66,7 +67,7 @@ namespace DroneDelivery_after
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DroneDelivery-after (Microservice) API v1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DroneDelivery-after (Macroservice) API v1");
             });
 
             app.UseHttpsRedirection();
